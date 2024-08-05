@@ -4,6 +4,7 @@ composer.lock
 
 # PHPStorm
 .idea/
+.env
 
 # VS Code
 .vscode/
