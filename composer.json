@@ -1,0 +1,30 @@
+{
+    "name": "realtyna/wp-plugin-framework",
+    "description": "A framework for developing WordPress plugins with consistent design and structure.",
+    "type": "library",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Realtyna\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Chandler P",
+            "email": "chandler.p@realtyna.net"
+        }
+    ],
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "keywords": [
+        "wordpress",
+        "plugin",
+        "framework"
+    ],
+    "support": {
+        "issues": "https://github.com/realtyna/wp-plugin-framework/issues",
+        "source": "https://github.com/realtyna/wp-plugin-framework"
+    }
+}
