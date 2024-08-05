@@ -85,4 +85,9 @@ class StartUp {
             $instance->register();
         }
     }
+
+    public function getComponents(): array
+    {
+        return $this->components;
+    }
 }
