@@ -1,0 +1,27 @@
+# Composer
+/vendor/
+composer.lock
+
+# PHPStorm
+.idea/
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Node
+node_modules/
+
+# Logs and system files
+*.log
+*.cache
+*.tmp
+
+# Hidden files
+.*
