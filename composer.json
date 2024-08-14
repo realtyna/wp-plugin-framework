@@ -8,7 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Realtyna\\": "src/",
+            "Realtyna\\Core\\": "src/",
             "Realtyna\\Test\\": "tests/"
         },
         "files": [
