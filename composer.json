@@ -8,8 +8,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Realtyna\\": "src/"
-        }
+            "Realtyna\\Core\\": "src/",
+            "Realtyna\\Test\\": "tests/"
+        },
+        "files": [
+            "src/helpers/var_dump.php"
+        ]
     },
     "authors": [
         {
@@ -28,8 +32,10 @@
         "source": "https://github.com/realtyna/wp-plugin-framework"
     },
     "require-dev": {
+        "symfony/var-dumper": "^v5.4.0",
         "phpunit/phpunit": "^9.5",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "yoast/phpunit-polyfills": "^2.0"
     },
     "scripts": {
         "test": "phpunit",
