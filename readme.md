@@ -1,4 +1,6 @@
 # Realtyna Base Plugin
+![WordPress Base Plugin Banner](https://realtyna.com/wp-content/uploads/2019/05/logo.png)
+
 
 Welcome to the Realtyna Base Plugin, a structured and scalable foundation for developing WordPress plugins. This framework is designed to simplify the process of plugin development by providing a set of tools and conventions, enabling developers to create robust and maintainable plugins.
 
@@ -29,40 +31,30 @@ To create a new WordPress plugin using the Realtyna Base Plugin framework, you c
 composer create-project realtyna/base-plugin {PluginName}
 ```
 
-Replace `{PluginName}` with the desired name for your plugin. This command will generate the base structure for your new plugin.
+Replace `{PluginName}` with the desired name for your plugin. This command will generate the base structure for your new plugin and automatically update the namespace, constant name, plugin name, and configuration settings based on the project name you provide.
 
 ### Configuring Your Plugin
 
-After creating the plugin, you'll need to configure it by modifying several key files:
+After running the `create-project` command, the script will automatically:
 
-1. **Namespace Update**: The default namespace in the plugin is `Realtyna\BasePlugin`. You will need to update this namespace in the `composer.json` file and all class files to match your desired namespace. This can be done manually for now, but in the future, CLI commands will be added to automate this process.
-
-    - **Example**: If you want to change the namespace to `MyCompany\MyPlugin`, update the `composer.json` file:
-
-   ```json
-   "autoload": {
-       "psr-4": {
-           "MyCompany\\MyPlugin\\": "src/"
-       }
-   }
-   ```
-
-    - After updating the namespace in `composer.json`, ensure all class files within the `src/` directory reflect this new namespace.
-
-2. **Configuration**: Modify the `config.php` file located in the `./src/Config/config.php` directory to set up your plugin’s details.
+1. **Update Namespace**: The namespace in all class files will be updated to match your project name.
+2. **Update Constant Name**: The constant name used throughout the project will reflect your plugin's name.
+3. **Update Plugin Name**: The plugin name used in various parts of the code and configuration will be set to the name you provided.
+4. **Configure `config.php`**: The `config.php` file will be updated to reflect your plugin’s name, slug, and text domain based on the project name.
 
 #### Example Configuration
 
-Here is an example of what your `config.php` file might look like:
+The `config.php` file located in the `./src/Config/config.php` directory will automatically be configured, but you can still customize additional settings if needed. Here’s an example:
 
 ```php
 return [
-    'name' => 'Your Plugin Name',
-    'slug' => 'your-plugin-slug',
-    'text-domain' => 'your-plugin-text-domain',
+    'name' => 'Realtyna Base Plugin',
+    'slug' => 'realtyna-base-plugin',
+    'text-domain' => 'realtyna-base-plugin',
     'log' => [
         'active' => true,
-        'level' => 'error'
+        'level' => 'error',
+        'path' => REALTYNA_BASE_PLUGIN_DIR . '/logs'
     ],
 ];
 ```
