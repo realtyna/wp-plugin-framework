@@ -14,8 +14,8 @@ DB_PASS=${DB_PASSWORD}
 DB_HOST=${DB_HOST}
 WP_VERSION=${WP_VERSION}
 
-WP_CORE_DIR=/tmp/wordpress/
-WP_TESTS_DIR=/tmp/wordpress-tests-lib
+WP_CORE_DIR=~/test-area/wordpress/
+WP_TESTS_DIR=~/test-area/wordpress-tests-lib
 
 set -ex
 
