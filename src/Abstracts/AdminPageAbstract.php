@@ -103,10 +103,9 @@ abstract class AdminPageAbstract
     {
         $page_slug = str_replace(['realtyna-realtyna-base-plugin-', 'realtyna-realtyna-base-plugin'], '', $_GET['page'] ?? '');
         $page_id = $page_slug ? $page_slug : 'main';
-
         echo '<div id="realtyna-base-plugin-' . esc_attr($page_id) . '" class="realtyna-base-plugin-dashboard-wrapper">';
         echo '<div class="realtyna-base-plugin-dashboard-header-wrapper">';
-        echo '<h2>' . esc_html(get_admin_page_title()) . '</h2>';
+        echo '<h2>' . esc_html($this->getPageTitle()) . '</h2>';
         echo '<div class="realtyna-base-plugin-dashboard-header-sub-title">';
         echo '</div></div>'; // Close header wrapper
 

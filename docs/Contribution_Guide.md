@@ -20,7 +20,7 @@ If you encounter a bug, have a feature request, or notice something that needs i
 - Relevant code snippets or error messages.
 - Your environment details (WordPress version, PHP version, etc.).
 
-[Open an Issue on GitHub](https://github.com/realtyna/Realtyna-Base-Plugin/issues)
+[Open an Issue on GitHub](https://github.com/realtyna/wp-plugin-framework/issues)
 
 ## 2. Submitting Pull Requests
 

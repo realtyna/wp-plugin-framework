@@ -4,7 +4,27 @@ Welcome to the Troubleshooting and FAQ section for the Realtyna Base Plugin fram
 
 ## FAQ
 
-**Note:** This is a new plugin framework, and there is currently no FAQ available. As the community grows and common questions arise, this section will be updated with answers to the most frequently asked questions.
+**Note:** This is a new plugin framework, and there is currently no extensive FAQ available. As the community grows and common questions arise, this section will be updated with answers to the most frequently asked questions.
+
+### 1. PHP Fatal Error: Cannot Declare Class `ComposerAutoloaderInit`
+
+**Issue**: Sometimes, if you create more than one plugin using this core, you may encounter the following error:
+
+```
+[14-Aug-2024 19:30:00 UTC] PHP Fatal error:  Cannot declare class ComposerAutoloaderInitbf1abfd8c17f6bc9ff561d65f4f14927, because the name is already in use
+```
+
+**Solution**: To fix this issue, you need to change the package name in the `composer.json` file to something unique. After updating the package name, remove the `vendor` folder and run `composer update` to regenerate the autoloader with the new name.
+
+Steps to fix:
+
+1. **Edit `composer.json`**: Change the `"name"` field to a unique package name.
+2. **Remove the `vendor` folder**: Delete the `vendor` directory from your plugin.
+3. **Run Composer Update**: Execute `composer update` in your terminal to regenerate the autoload files.
+
+```bash
+composer update
+```
 
 If you have a question or encounter an issue that is not covered here, please feel free to open an issue on our GitHub repository, and we'll be happy to assist you.
 

@@ -33,6 +33,7 @@ Comprehensive documentation is available for developers of all levels:
 - [Advanced Usage](docs/Advanced_Usage.md)
 - [API Reference](docs/API_Reference.md)
 - [Examples and Use Cases](docs/Examples_and_Use_Cases.md)
+- [Release Script Guide](docs/release.md)
 - [Troubleshooting and FAQ](docs/Troubleshooting_and_FAQ.md)
 - [Contribution Guide](docs/Contribution_Guide.md)
 - [Changelog](docs/Changelog.md)
