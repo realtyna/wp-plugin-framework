@@ -70,8 +70,9 @@ abstract class StartUp
 
             $this->components();
             $this->registerComponents();
+        }else{
+            throw new RequirementsNotMetException('Plugin\'s requirements was not met.');
         }
-        throw new RequirementsNotMetException('Plugin\'s requirements was not met.');
     }
 
     /**

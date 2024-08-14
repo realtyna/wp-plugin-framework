@@ -10,10 +10,7 @@
         "psr-4": {
             "Realtyna\\Core\\": "src/",
             "Realtyna\\Test\\": "tests/"
-        },
-        "files": [
-            "src/helpers/var_dump.php"
-        ]
+        }
     },
     "authors": [
         {
