@@ -22,6 +22,23 @@ class Container
     }
 
     /**
+     * Bind an existing instance to the container.
+     *
+     * This method allows you to store a pre-existing object instance
+     * within the container. This can be useful when you want to bind an
+     * object that is already instantiated and reuse it across your application.
+     *
+     * @param string $abstract The class or interface name.
+     * @param mixed $instance The object instance to bind.
+     *
+     * @return void
+     */
+    public function set(string $abstract, mixed $instance): void
+    {
+        $this->instances[$abstract] = $instance;
+    }
+
+    /**
      * Bind a class or interface as a singleton.
      *
      * @param string $abstract
@@ -46,13 +63,20 @@ class Container
      */
     public function get(string $abstract): mixed
     {
+        // Check if an instance is directly set
+        if (isset($this->instances[$abstract])) {
+            return $this->instances[$abstract];
+        }
+
         // If the binding is a closure, execute it.
         if (isset($this->bindings[$abstract]) && is_callable($this->bindings[$abstract])) {
             return $this->bindings[$abstract]($this);
         }
 
+        // Otherwise, resolve the class or interface
         return $this->resolve($abstract);
     }
+
 
     /**
      * Automatically resolve the class dependencies and instantiate the class.
