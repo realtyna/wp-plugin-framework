@@ -18,6 +18,7 @@ abstract class AdminPageAbstract
     {
         add_action('admin_menu', [$this, 'addMenuPage']);
         add_action('admin_enqueue_scripts', [$this, 'enqueueAssets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueueGlobalAssets']);
     }
     /**
      * Add the admin page or submenu to the WordPress admin menu.
@@ -93,6 +94,8 @@ abstract class AdminPageAbstract
      * @return void
      */
     abstract protected function enqueuePageAssets(): void;
+
+    abstract public function enqueueGlobalAssets(): void;
 
     /**
      * Render the admin page content by including the template file.
