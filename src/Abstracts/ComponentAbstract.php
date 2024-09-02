@@ -30,7 +30,7 @@ abstract class ComponentAbstract
         $this->restApiEndpoints();
         $this->widgets();
         $this->customTaxonomies();
-
+        add_action('wp_ajax_dismiss_admin_notice', [$this, 'handleDismissAdminNotice']);
         add_action('admin_notices', [$this, 'displayAdminNotices']);
     }
 
@@ -242,13 +242,16 @@ abstract class ComponentAbstract
      * @param string $type The type of notice ('success', 'warning', 'error', 'info'). Defaults to 'info'.
      * @return void
      */
-    public function addAdminNotice(string $message, string $type = 'info'): void
+    public function addAdminNotice(string $message, string $type = 'info', bool $isClosable = false, string $noticeId = ''): void
     {
         $this->adminNotices[] = [
             'message' => $message,
-            'type' => $type
+            'type' => $type,
+            'is_closable' => $isClosable,
+            'notice_id' => $noticeId
         ];
     }
+
 
     /**
      * Displays the registered admin notices in the WordPress admin area.
@@ -258,8 +261,59 @@ abstract class ComponentAbstract
     public function displayAdminNotices(): void
     {
         foreach ($this->adminNotices as $notice) {
+            // Skip the notice if it has been dismissed
+            if ($notice['is_closable'] && $notice['notice_id'] && get_option('dismissed_notice_' . $notice['notice_id'])) {
+                continue;
+            }
+
             $class = "notice notice-{$notice['type']}";
-            echo "<div class=\"{$class}\"><p>{$notice['message']}</p></div>";
+            if ($notice['is_closable']) {
+                $class .= ' is-dismissible';
+            }
+
+            echo "<div class=\"{$class}\" data-notice-id=\"{$notice['notice_id']}\"><p>{$notice['message']}</p></div>";
         }
+        // Enqueue the script for handling notice dismissal
+        echo $this->enqueueNoticeDismissScript();
     }
+    public function enqueueNoticeDismissScript(): void
+    {
+        ?>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function() {
+                const notices = document.querySelectorAll('.notice.is-dismissible');
+
+                notices.forEach(function(notice) {
+                    const noticeId = notice.getAttribute('data-notice-id');
+
+                    if (noticeId) {
+                        notice.addEventListener('click', function(event) {
+                            if (event.target.classList.contains('notice-dismiss')) {
+                                // Send AJAX request to save the dismissed notice
+                                fetch(ajaxurl, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    body: 'action=dismiss_admin_notice&notice_id=' + noticeId
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+        <?php
+    }
+
+    public function handleDismissAdminNotice(): void
+    {
+        if (isset($_POST['notice_id'])) {
+            $noticeId = sanitize_text_field($_POST['notice_id']);
+            update_option('dismissed_notice_' . $noticeId, true);
+        }
+
+        wp_die(); // Required to terminate immediately and return a proper response
+    }
+
 }
