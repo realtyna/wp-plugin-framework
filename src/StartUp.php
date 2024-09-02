@@ -64,12 +64,8 @@ abstract class StartUp
             $this->boot();
 
             $this->migrations();
-
             $this->adminPages();
-            $this->registerAdminPages();
-
             $this->components();
-            $this->registerComponents();
         }else{
             throw new RequirementsNotMetException('Plugin\'s requirements was not met.');
         }
@@ -83,23 +79,12 @@ abstract class StartUp
      */
     public function addComponent(string $component): void
     {
-        $this->components[] = $component;
-    }
-
-    /**
-     * Register all components that were added.
-     *
-     * @return void
-     */
-    private function registerComponents(): void
-    {
-        foreach ($this->components as $component) {
-            $service = $this->container->get($component);
-            if ($service instanceof ComponentAbstract && method_exists($service, 'register')) {
-                $service->register();
-            }
+        $service = $this->container->get($component);
+        if ($service instanceof ComponentAbstract && method_exists($service, 'register')) {
+            $service->register();
         }
     }
+
 
     /**
      * Add an admin page to the list for registration.
@@ -110,21 +95,9 @@ abstract class StartUp
     public function addAdminPage(string $adminPage): void
     {
         $this->adminPages[] = $adminPage;
-    }
-
-    /**
-     * Register all admin pages that were added.
-     *
-     * @throws \ReflectionException
-     * @return void
-     */
-    private function registerAdminPages(): void
-    {
-        foreach ($this->adminPages as $adminPage) {
-            $service = $this->container->get($adminPage);
-            if ($service instanceof AdminPageAbstract && method_exists($service, 'register')) {
-                $service->register();
-            }
+        $service = $this->container->get($adminPage);
+        if ($service instanceof AdminPageAbstract && method_exists($service, 'register')) {
+            $service->register();
         }
     }
 
