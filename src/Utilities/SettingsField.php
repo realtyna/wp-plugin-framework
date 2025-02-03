@@ -394,4 +394,99 @@ class SettingsField
             call_user_func($callback, $attributes);
         }
     }
+
+    /**
+     * Echo repeater input (text field with add/remove buttons)
+     *
+     * @param array $attributes {
+     *     @type string $parent_name Parent name for the field (e.g., option group).
+     *     @type string $child_name Name of the field.
+     *     @type string $id HTML id attribute.
+     *     @type array  $values Array of values (if editing existing data).
+     *     @type string $label Label text for the field.
+     *     @type string $description Description text for the field.
+     * }
+     * @return void
+     */
+    public static function repeater_input(array $attributes): void
+    {
+        $parent_name = $attributes['parent_name'] ?? '';
+        $child_name = $attributes['child_name'] ?? '';
+        $id = $attributes['id'] ?? '';
+        $name = "{$parent_name}[{$child_name}]";
+        $values = $attributes['values'] ?? ['']; // Default to one empty field if no values exist.
+
+        self::start_wrap($id);
+        self::label($attributes);
+
+        echo '<div class="realtyna-repeater-container" data-name="' . esc_attr($name) . '">';
+
+        foreach ($values as $value) {
+            echo '<div class="realtyna-repeater-item">
+                <input type="text" name="' . esc_attr($name . '[]') . '" value="' . esc_attr($value) . '" />
+                <button type="button" class="realtyna-repeater-remove">Delete</button>
+              </div>';
+        }
+
+        echo '</div>';
+        echo '<button type="button" class="realtyna-repeater-add">Add More</button>';
+
+        self::description($attributes);
+        self::end_wrap();
+
+        // Add JavaScript to handle the dynamic addition/removal of fields
+        add_action('admin_footer', function () {
+            ?>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    document.querySelectorAll('.realtyna-repeater-add').forEach(button => {
+                        button.addEventListener('click', function () {
+                            let container = this.previousElementSibling;
+                            let name = container.getAttribute('data-name');
+                            let newItem = document.createElement('div');
+                            newItem.classList.add('realtyna-repeater-item');
+                            newItem.innerHTML = `
+                            <input type="text" name="${name}[]" value="" />
+                            <button type="button" class="realtyna-repeater-remove">Delete</button>
+                        `;
+                            container.appendChild(newItem);
+                        });
+                    });
+
+                    document.addEventListener('click', function (event) {
+                        if (event.target.classList.contains('realtyna-repeater-remove')) {
+                            event.target.parentElement.remove();
+                        }
+                    });
+                });
+            </script>
+            <style>
+                .realtyna-repeater-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-bottom: 5px;
+                }
+                .realtyna-repeater-remove {
+                    background: #DD1435;
+                    border-radius: 8px;
+                    border: 1px solid #DD1435;
+                    color: #fff;
+                    fill: #fff;
+                    padding: 5px 15px;
+                }
+                .realtyna-repeater-add {
+                    background: #6302DD;
+                    border-radius: 8px;
+                    border: 1px solid #6302DD;
+                    color: #fff;
+                    fill: #fff;
+                    padding: 5px 15px;
+                }
+            </style>
+            <?php
+        });
+    }
+
+
 }
