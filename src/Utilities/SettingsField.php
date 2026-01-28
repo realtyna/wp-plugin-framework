@@ -179,7 +179,7 @@ class SettingsField
 
         echo '<select id="' . esc_attr($id) . '" name="' . esc_attr($name) . '">';
         foreach ($options as $o_key => $o_title) {
-            $selected = $selected_value === $o_key ? true : false;
+            $selected = $selected_value == $o_key;
             echo '<option value="' . esc_attr($o_key) . '" ' . selected(
                     $selected,
                     true,
